@@ -1,0 +1,106 @@
+[gd_scene load_steps=15 format=3 uid="uid://br7k4mf2ly1sx"]
+
+[ext_resource type="Script" path="res://Characters/Player/player.gd" id="1_2seao"]
+[ext_resource type="Texture2D" uid="uid://c71v6030set4x" path="res://Textures/characters_packed.png" id="1_uueth"]
+[ext_resource type="Script" path="res://Characters/Player/Player States/RunningState.gd" id="3_okbf5"]
+[ext_resource type="Script" path="res://Characters/Player/Player States/DashState.gd" id="3_r00a1"]
+[ext_resource type="Script" path="res://StateMachine/FiniteStateMachine.gd" id="3_xmcbr"]
+[ext_resource type="Script" path="res://Characters/Player/Player States/AirborneState.gd" id="4_y6twk"]
+[ext_resource type="Script" path="res://Characters/Player/Player States/IdleState.gd" id="5_afpx8"]
+[ext_resource type="Script" path="res://Characters/Player/SharedMovements.gd" id="8_hl7jw"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2aogb"]
+atlas = ExtResource("1_uueth")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jws77"]
+atlas = ExtResource("1_uueth")
+region = Rect2(24, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s7wo0"]
+atlas = ExtResource("1_uueth")
+region = Rect2(24, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0dhu5"]
+atlas = ExtResource("1_uueth")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7l5i5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2aogb")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jws77")
+}],
+"loop": true,
+"name": &"Jump",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s7wo0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0dhu5")
+}],
+"loop": true,
+"name": &"Run",
+"speed": 7.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m4lq7"]
+size = Vector2(10, 13)
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_2seao")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_7l5i5")
+animation = &"Idle"
+flip_h = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 5.5)
+shape = SubResource("RectangleShape2D_m4lq7")
+
+[node name="DashTimer" type="Timer" parent="."]
+
+[node name="FiniteStateMachine" type="Node" parent="." node_paths=PackedStringArray("state")]
+script = ExtResource("3_xmcbr")
+state = NodePath("IdleState")
+
+[node name="AirborneState" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("actor", "animator")]
+script = ExtResource("4_y6twk")
+actor = NodePath("../..")
+animator = NodePath("../../AnimatedSprite2D")
+
+[node name="RunningState" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("actor", "animator", "sharedMovements")]
+script = ExtResource("3_okbf5")
+actor = NodePath("../..")
+animator = NodePath("../../AnimatedSprite2D")
+sharedMovements = NodePath("../../SharedMovements")
+
+[node name="IdleState" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("actor", "animator")]
+script = ExtResource("5_afpx8")
+actor = NodePath("../..")
+animator = NodePath("../../AnimatedSprite2D")
+
+[node name="DashState" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("actor", "animator", "dashTimer")]
+script = ExtResource("3_r00a1")
+actor = NodePath("../..")
+animator = NodePath("../../AnimatedSprite2D")
+dashTimer = NodePath("../../DashTimer")
+
+[node name="SharedMovements" type="Node" parent="." node_paths=PackedStringArray("actor")]
+script = ExtResource("8_hl7jw")
+actor = NodePath("..")
+
+[connection signal="timeout" from="DashTimer" to="." method="_on_dash_timer_timeout"]
+[connection signal="timeout" from="DashTimer" to="FiniteStateMachine/DashState" method="_on_dash_timer_timeout"]
