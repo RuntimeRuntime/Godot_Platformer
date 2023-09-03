@@ -17,6 +17,7 @@ func _enter_state() -> void:
 	set_physics_process(true)
 	animator.play('Jump')
 	dashTimer.start(DASH_DURATION)
+	UtilityMovementMethods.canDash = false
 	
 func _exit_state() -> void:
 	animator.scale = Vector2.ONE
@@ -24,8 +25,6 @@ func _exit_state() -> void:
 	
 func _physics_process(delta):
 	actor.velocity=UtilityMovementMethods.handle_Dash(animator)
-
-
 
 func _on_dash_timer_timeout():
 	dashTimer.stop()

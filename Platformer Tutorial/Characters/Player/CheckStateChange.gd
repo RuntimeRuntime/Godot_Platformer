@@ -22,6 +22,6 @@ static func check_is_idle(isIdleSignal: Signal, runningDirection: int):
 		isIdleSignal.emit()
 		
 static func check_is_dashing(isDashingSignal: Signal, actor: CharacterBody2D):
-	if Input.is_action_pressed('dash') && actor.currentDashes != 0:
+	if Input.is_action_pressed('dash') && UtilityMovementMethods.canDash == true:
 		isDashingSignal.emit()
 		

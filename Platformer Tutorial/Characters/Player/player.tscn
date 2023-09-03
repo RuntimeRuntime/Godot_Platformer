@@ -56,8 +56,9 @@ animations = [{
 "speed": 7.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_m4lq7"]
-size = Vector2(10, 13)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xiqyx"]
+radius = 6.0
+height = 17.0
 
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_2seao")
@@ -68,10 +69,15 @@ animation = &"Idle"
 flip_h = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 5.5)
-shape = SubResource("RectangleShape2D_m4lq7")
+position = Vector2(0, 4)
+shape = SubResource("CapsuleShape2D_xiqyx")
+
+[node name="CoyoteTimer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
 
 [node name="DashTimer" type="Timer" parent="."]
+one_shot = true
 
 [node name="FiniteStateMachine" type="Node" parent="." node_paths=PackedStringArray("state")]
 script = ExtResource("3_xmcbr")
@@ -98,10 +104,11 @@ actor = NodePath("../..")
 animator = NodePath("../../AnimatedSprite2D")
 dashTimer = NodePath("../../DashTimer")
 
-[node name="UtilityMovementMethods" type="Node" parent="."]
+[node name="UtilityMovementMethods" type="Node" parent="FiniteStateMachine"]
 script = ExtResource("8_hl7jw")
 
 [node name="CheckStateChange" type="Node" parent="."]
 script = ExtResource("9_nvich")
 
+[connection signal="timeout" from="CoyoteTimer" to="FiniteStateMachine/AirborneState" method="_on_coyote_timer_timeout"]
 [connection signal="timeout" from="DashTimer" to="FiniteStateMachine/DashState" method="_on_dash_timer_timeout"]

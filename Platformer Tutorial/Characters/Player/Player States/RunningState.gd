@@ -14,6 +14,7 @@ func _enter_state() -> void:
 	print('Running')
 	set_physics_process(true)
 	actor.currentJumps = actor.MAX_JUMPS
+	UtilityMovementMethods.canDash = true
 	
 func _exit_state() -> void:
 	set_physics_process(false)

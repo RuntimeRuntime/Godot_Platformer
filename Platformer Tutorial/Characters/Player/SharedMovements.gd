@@ -6,6 +6,7 @@ const ACCELERATION = 50.0
 const SPEED = 200.0
 
 static var dashDirection = 1
+static var canDash = false
 
 static func input_direction(sprite: AnimatedSprite2D) -> Vector2:
 	var input_dir = Vector2.ZERO
@@ -20,7 +21,6 @@ static func flip_sprite(sprite: AnimatedSprite2D, input_dir) -> void:
 				sprite.flip_h = 0
 			else:
 				sprite.flip_h = 1
-			#Player.setDashDirection(input_dir.x)
 			dashDirection = input_dir.x
 
 static func calculate_velocity_x(direction: int, velocity: float) -> float:
