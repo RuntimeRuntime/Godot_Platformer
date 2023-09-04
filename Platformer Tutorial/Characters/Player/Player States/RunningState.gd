@@ -30,6 +30,3 @@ func check_for_state_change(input_dir) -> void:
 	CheckStateChange.check_is_idle(is_idle, input_dir.x)
 	CheckStateChange.check_is_falling(is_jumping, actor)
 
-func calculate_jump_velocity():
-	actor.velocity.y = actor.JUMP_POWER
-	actor.currentJumps -= 1

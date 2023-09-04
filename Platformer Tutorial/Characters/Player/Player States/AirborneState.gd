@@ -4,6 +4,7 @@ extends State
 const GRAVITY_ACCELERATION = 30
 const MAX_GRAVITY = 400.0
 const JUMP_POWER = -450
+const COYOTE_TIME = .15
 
 @export var actor: Player
 @export var animator: AnimatedSprite2D
@@ -23,7 +24,7 @@ func _enter_state() -> void:
 	set_physics_process(true)
 	animator.play('Jump')
 	if !check_is_jumping():
-		coyoteTimer.start(.1)
+		coyoteTimer.start(COYOTE_TIME)
 	
 func _exit_state() -> void:
 	animator.scale = Vector2.ONE

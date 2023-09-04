@@ -1,10 +1,6 @@
 class_name Player
 extends CharacterBody2D
 
-
-const GRAVITY_ACCELERATION = 30
-const MAX_GRAVITY = 400.0
-const JUMP_POWER = -400
 const MAX_JUMPS = 2
 
 var currentDashes = 1
