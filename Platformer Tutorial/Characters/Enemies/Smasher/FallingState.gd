@@ -1,6 +1,7 @@
 extends State
 
 @export var actor: Smasher
+@export var hitbox: CollisionShape2D
 
 const ACCELERATION = .1
 const MAX_SPEED = 8
@@ -13,6 +14,7 @@ func _ready():
 	set_physics_process(false)
 
 func _enter_state() -> void:
+	hitbox.set_disabled(false)
 	set_physics_process(true)
 	
 func _exit_state() -> void:
@@ -28,3 +30,4 @@ func handle_fall():
 	
 func _on_area_2d_is_grounded():
 	is_grounded.emit()
+	

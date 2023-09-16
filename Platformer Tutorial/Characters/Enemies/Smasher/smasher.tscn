@@ -101,6 +101,7 @@ animation = &"new_animation"
 [node name="KillBox" type="CollisionShape2D" parent="Hitbox"]
 position = Vector2(1, 9.25)
 shape = SubResource("RectangleShape2D_qw4qs")
+disabled = true
 debug_color = Color(1, 0.6, 0.701961, 0.419608)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
@@ -133,9 +134,10 @@ script = ExtResource("5_yls6p")
 actor = NodePath("../..")
 animator = NodePath("../../AnimatedSprite2D")
 
-[node name="FallingState" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("actor")]
+[node name="FallingState" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("actor", "hitbox")]
 script = ExtResource("6_jf4wu")
 actor = NodePath("../..")
+hitbox = NodePath("../../Hitbox/KillBox")
 
 [node name="GroundedState" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("animator")]
 script = ExtResource("7_fbbcn")

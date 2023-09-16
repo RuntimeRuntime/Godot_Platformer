@@ -10,6 +10,8 @@ static func check_is_jumping(isJumpingSignal: Signal, actor: CharacterBody2D):
 		isJumpingSignal.emit()
 
 static func check_is_falling(isFallingSignal: Signal, actor: CharacterBody2D):
+	actor.floor_snap_length = 4
+	actor.apply_floor_snap()
 	if !actor.is_on_floor():
 		isFallingSignal.emit()
 
