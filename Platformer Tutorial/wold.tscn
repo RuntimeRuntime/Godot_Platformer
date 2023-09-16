@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dedgxjovehjyv"]
+[gd_scene load_steps=9 format=3 uid="uid://dedgxjovehjyv"]
 
 [ext_resource type="PackedScene" uid="uid://rdfl11yletln" path="res://Tilemaps/SnowTileMap.tscn" id="1_suusr"]
 [ext_resource type="PackedScene" uid="uid://br7k4mf2ly1sx" path="res://Characters/Player/player.tscn" id="2_bpv58"]
@@ -6,6 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://bkyifxjgeuqa8" path="res://Tilemaps/tile_map.tscn" id="3_g6e8d"]
 [ext_resource type="Texture2D" uid="uid://dgfsvsmjcjkpu" path="res://Textures/MiddleLayer.png" id="4_8u0ec"]
 [ext_resource type="Texture2D" uid="uid://du3r45kl0kgyi" path="res://Textures/FrontLayer.png" id="5_mntje"]
+[ext_resource type="PackedScene" uid="uid://nwya7esbtdh1" path="res://Characters/Enemies/Spikes/spikes.tscn" id="7_v8uwl"]
+[ext_resource type="PackedScene" uid="uid://dc5ax57xeudks" path="res://Characters/Enemies/Smasher/smasher.tscn" id="8_1h7b0"]
 
 [node name="Wold" type="Node2D"]
 
@@ -20,6 +22,7 @@ zoom = Vector2(0.8, 0.8)
 position_smoothing_enabled = true
 
 [node name="Player" parent="." instance=ExtResource("2_bpv58")]
+z_index = 15
 position = Vector2(45, 117)
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="Player"]
@@ -54,3 +57,31 @@ motion_mirroring = Vector2(1600, 0)
 position = Vector2(270, 117)
 scale = Vector2(2.5, 2.5)
 texture = ExtResource("5_mntje")
+
+[node name="Spike Hazards" type="Node2D" parent="."]
+
+[node name="Spikes" parent="Spike Hazards" instance=ExtResource("7_v8uwl")]
+position = Vector2(117, 144)
+
+[node name="Spikes2" parent="Spike Hazards" instance=ExtResource("7_v8uwl")]
+position = Vector2(171, 144)
+
+[node name="Spikes3" parent="Spike Hazards" instance=ExtResource("7_v8uwl")]
+position = Vector2(153, 144)
+
+[node name="Spikes4" parent="Spike Hazards" instance=ExtResource("7_v8uwl")]
+position = Vector2(135, 144)
+
+[node name="Smashers" type="Node2D" parent="."]
+
+[node name="Smasher" parent="Smashers" instance=ExtResource("8_1h7b0")]
+position = Vector2(9, 72)
+
+[node name="Smasher2" parent="Smashers" instance=ExtResource("8_1h7b0")]
+position = Vector2(243, 72)
+
+[node name="Smasher3" parent="Smashers" instance=ExtResource("8_1h7b0")]
+position = Vector2(189, 45)
+
+[node name="Smasher4" parent="Smashers" instance=ExtResource("8_1h7b0")]
+position = Vector2(99, 18)

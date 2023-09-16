@@ -1,0 +1,165 @@
+[gd_scene load_steps=22 format=3 uid="uid://dc5ax57xeudks"]
+
+[ext_resource type="Texture2D" uid="uid://c71v6030set4x" path="res://Textures/characters_packed.png" id="1_awpbr"]
+[ext_resource type="Script" path="res://Characters/Enemies/Smasher/smasher.gd" id="1_cme8a"]
+[ext_resource type="Script" path="res://StateMachine/FiniteStateMachine.gd" id="3_l10wp"]
+[ext_resource type="Script" path="res://Characters/Enemies/Smasher/SmasherStates/IdleState.gd" id="4_1mlp6"]
+[ext_resource type="Script" path="res://Characters/Enemies/Smasher/SmasherStates/FoundPlayerState.gd" id="5_yls6p"]
+[ext_resource type="Script" path="res://Characters/Enemies/Smasher/FallingState.gd" id="6_jf4wu"]
+[ext_resource type="Script" path="res://Characters/Enemies/Smasher/LandedState.gd" id="7_fbbcn"]
+[ext_resource type="PackedScene" uid="uid://cxe5wtcewmgad" path="res://Characters/Hitboxes/hitbox.tscn" id="7_q6xgl"]
+[ext_resource type="Script" path="res://Characters/Enemies/Smasher/Node.gd" id="8_625wy"]
+[ext_resource type="Script" path="res://Characters/Enemies/Smasher/Area2D.gd" id="8_k6lh1"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gvkk5"]
+atlas = ExtResource("1_awpbr")
+region = Rect2(120, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ql65i"]
+atlas = ExtResource("1_awpbr")
+region = Rect2(96, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bqyhw"]
+atlas = ExtResource("1_awpbr")
+region = Rect2(120, 24, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_huwnx"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gvkk5")
+}],
+"loop": true,
+"name": &"Angry",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ql65i")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bqyhw")
+}],
+"loop": true,
+"name": &"new_animation",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qw4qs"]
+size = Vector2(16, 2.5)
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_te06h"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bteui"]
+size = Vector2(18, 18)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dtyrp"]
+size = Vector2(17.9868, 0.464931)
+
+[sub_resource type="Gradient" id="Gradient_k4a0t"]
+colors = PackedColorArray(0.94902, 0.94902, 0.94902, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_em857"]
+gradient = SubResource("Gradient_k4a0t")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_pcjnh"]
+emission_shape = 3
+emission_box_extents = Vector3(9, 2, 0)
+particle_flag_disable_z = true
+direction = Vector3(0, -1, 0)
+gravity = Vector3(0, 2, 0)
+initial_velocity_min = 5.0
+initial_velocity_max = 15.0
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+scale_min = 2.0
+scale_max = 4.0
+color = Color(0.960784, 0.960784, 0.960784, 0.639216)
+color_ramp = SubResource("GradientTexture1D_em857")
+
+[node name="Smasher" type="Node2D"]
+position = Vector2(-0.993246, -10.9257)
+script = ExtResource("1_cme8a")
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+exclude_parent = false
+target_position = Vector2(0, 3000)
+collision_mask = 2
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(1, 2)
+sprite_frames = SubResource("SpriteFrames_huwnx")
+animation = &"new_animation"
+
+[node name="Hitbox" parent="." instance=ExtResource("7_q6xgl")]
+
+[node name="KillBox" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(1, 9.25)
+shape = SubResource("RectangleShape2D_qw4qs")
+debug_color = Color(1, 0.6, 0.701961, 0.419608)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+collision_mask = 5
+physics_material_override = SubResource("PhysicsMaterial_te06h")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(1, 2)
+shape = SubResource("RectangleShape2D_bteui")
+
+[node name="Area2D" type="Area2D" parent="."]
+script = ExtResource("8_k6lh1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(1.01073, 10.7439)
+shape = SubResource("RectangleShape2D_dtyrp")
+
+[node name="FiniteStateMachine" type="Node" parent="." node_paths=PackedStringArray("state")]
+script = ExtResource("3_l10wp")
+state = NodePath("IdleState")
+
+[node name="IdleState" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("actor", "animator", "raycast")]
+script = ExtResource("4_1mlp6")
+actor = NodePath("../..")
+animator = NodePath("../../AnimatedSprite2D")
+raycast = NodePath("../../RayCast2D")
+
+[node name="ShakingState" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("actor", "animator")]
+script = ExtResource("5_yls6p")
+actor = NodePath("../..")
+animator = NodePath("../../AnimatedSprite2D")
+
+[node name="FallingState" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("actor")]
+script = ExtResource("6_jf4wu")
+actor = NodePath("../..")
+
+[node name="GroundedState" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("animator")]
+script = ExtResource("7_fbbcn")
+animator = NodePath("../../AnimatedSprite2D")
+
+[node name="RiseState" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("actor")]
+script = ExtResource("8_625wy")
+actor = NodePath("../..")
+
+[node name="FallTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="GroundedTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+position = Vector2(1.04173, 10.3677)
+emitting = false
+amount = 32
+process_material = SubResource("ParticleProcessMaterial_pcjnh")
+lifetime = 0.5
+one_shot = true
+
+[connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]
+[connection signal="isGrounded" from="Area2D" to="FiniteStateMachine/FallingState" method="_on_area_2d_is_grounded"]
+[connection signal="timeout" from="FallTimer" to="FiniteStateMachine/ShakingState" method="_on_timer_timeout"]
+[connection signal="timeout" from="GroundedTimer" to="FiniteStateMachine/GroundedState" method="_on_grounded_timer_timeout"]

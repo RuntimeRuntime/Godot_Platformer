@@ -13,7 +13,6 @@ func _ready():
 
 
 func _enter_state() -> void:
-	print('Dash')
 	set_physics_process(true)
 	animator.play('Jump')
 	dashTimer.start(DASH_DURATION)

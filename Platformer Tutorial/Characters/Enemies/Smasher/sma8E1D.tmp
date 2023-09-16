@@ -1,0 +1,80 @@
+[gd_scene load_steps=11 format=3 uid="uid://dc5ax57xeudks"]
+
+[ext_resource type="Texture2D" uid="uid://c71v6030set4x" path="res://Textures/characters_packed.png" id="1_awpbr"]
+[ext_resource type="Script" path="res://Characters/Enemies/Smasher/smasher.gd" id="1_cme8a"]
+[ext_resource type="Script" path="res://StateMachine/FiniteStateMachine.gd" id="3_l10wp"]
+[ext_resource type="Script" path="res://Characters/Enemies/Smasher/SmasherStates/IdleState.gd" id="4_1mlp6"]
+[ext_resource type="Script" path="res://Characters/Enemies/Smasher/SmasherStates/FoundPlayerState.gd" id="5_yls6p"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gvkk5"]
+atlas = ExtResource("1_awpbr")
+region = Rect2(120, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ql65i"]
+atlas = ExtResource("1_awpbr")
+region = Rect2(96, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bqyhw"]
+atlas = ExtResource("1_awpbr")
+region = Rect2(120, 24, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_huwnx"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gvkk5")
+}],
+"loop": true,
+"name": &"Angry",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ql65i")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bqyhw")
+}],
+"loop": true,
+"name": &"new_animation",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7152t"]
+size = Vector2(16, 3)
+
+[node name="Smasher" type="Node2D"]
+script = ExtResource("1_cme8a")
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+target_position = Vector2(0, 3000)
+collision_mask = 2
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(1, 2)
+sprite_frames = SubResource("SpriteFrames_huwnx")
+animation = &"new_animation"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 7.5)
+shape = SubResource("RectangleShape2D_7152t")
+
+[node name="FiniteStateMachine" type="Node" parent="." node_paths=PackedStringArray("state")]
+script = ExtResource("3_l10wp")
+state = NodePath("IdleState")
+
+[node name="IdleState" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("actor", "animator", "raycast")]
+script = ExtResource("4_1mlp6")
+actor = NodePath("../..")
+animator = NodePath("../../AnimatedSprite2D")
+raycast = NodePath("../../RayCast2D")
+
+[node name="FoundPlayerState" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("actor", "animator")]
+script = ExtResource("5_yls6p")
+actor = NodePath("../..")
+animator = NodePath("../../AnimatedSprite2D")

@@ -20,7 +20,6 @@ func _ready():
 	set_physics_process(false)
 
 func _enter_state() -> void:
-#	print('Airborne')
 	set_physics_process(true)
 	animator.play('Jump')
 	if !check_is_jumping():
@@ -33,7 +32,6 @@ func _exit_state() -> void:
 	
 @warning_ignore("unused_parameter")
 func _physics_process(delta):
-	# Apply Gravity	
 	var input_dir = UtilityMovementMethods.input_direction(animator)
 	actor.velocity.x = UtilityMovementMethods.calculate_velocity_x(input_dir.x, actor.velocity.x)
 	has_release_jump()
@@ -63,7 +61,6 @@ func handle_jump():
 	gravityModifier = 1
 
 func has_release_jump():
-	print(actor.velocity.y)
 	if Input.is_action_just_released("jump") && actor.velocity.y < -50:
 		gravityModifier = 1 + (abs(actor.velocity.y) / MAX_GRAVITY)
 
