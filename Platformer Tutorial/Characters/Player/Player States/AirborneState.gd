@@ -4,7 +4,7 @@ extends State
 const GRAVITY_ACCELERATION = 30
 const MAX_GRAVITY = 400.0
 const JUMP_POWER = -450
-const COYOTE_TIME = .15
+const COYOTE_TIME = .16
 
 @export var actor: Player
 @export var animator: AnimatedSprite2D

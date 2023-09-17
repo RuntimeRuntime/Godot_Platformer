@@ -11,7 +11,7 @@ func _ready():
 	set_physics_process(false)
 
 func _enter_state() -> void:
-	fall_timer.start(1)
+	fall_timer.start(.3)
 	set_physics_process(true)
 	
 func _exit_state() -> void:
@@ -25,8 +25,8 @@ func _physics_process(delta):
 	
 func shake_animation(delta):
 	if(actor.position == actor.starting_position):
-		actor.position.x += randi_range(-1,1)
-		actor.position.y += randi_range(-1,1)
+		actor.position.x += randi_range(-2,2)
+		actor.position.y += randi_range(-2,2)
 	else: 
 		actor.position = actor.starting_position
 

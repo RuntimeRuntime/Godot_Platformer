@@ -1,0 +1,59 @@
+[gd_scene load_steps=8 format=3 uid="uid://dgule178clfgf"]
+
+[ext_resource type="PackedScene" uid="uid://l1unmoqd7ua4" path="res://Characters/Enemies/Walker/walker.tscn" id="1_tbbcq"]
+[ext_resource type="Texture2D" uid="uid://c71v6030set4x" path="res://Textures/characters_packed.png" id="2_odm70"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p82kq"]
+atlas = ExtResource("2_odm70")
+region = Rect2(48, 48, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c7qlu"]
+atlas = ExtResource("2_odm70")
+region = Rect2(0, 48, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ydgpp"]
+atlas = ExtResource("2_odm70")
+region = Rect2(24, 48, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qyila"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p82kq")
+}],
+"loop": true,
+"name": &"Hide",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c7qlu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ydgpp")
+}],
+"loop": true,
+"name": &"Walk",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fac43"]
+size = Vector2(11, 10)
+
+[node name="SmallWalker" instance=ExtResource("1_tbbcq")]
+position = Vector2(0, -11)
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D" parent="." index="0"]
+sprite_frames = SubResource("SpriteFrames_qyila")
+
+[node name="CollisionShape2D" parent="." index="2"]
+position = Vector2(0.5, 6)
+shape = SubResource("RectangleShape2D_fac43")
+
+[node name="DownwardRaycast" parent="." index="3"]
+position = Vector2(-6, 10)
+target_position = Vector2(0, 4)
+
+[node name="LookForPlayerRaycast" parent="." index="4"]
+target_position = Vector2(-54, 0)

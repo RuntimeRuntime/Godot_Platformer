@@ -148,6 +148,7 @@ script = ExtResource("8_625wy")
 actor = NodePath("../..")
 
 [node name="FallTimer" type="Timer" parent="."]
+wait_time = 0.2
 one_shot = true
 
 [node name="GroundedTimer" type="Timer" parent="."]

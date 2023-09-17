@@ -3,8 +3,8 @@ extends State
 @export var actor: Smasher
 @export var hitbox: CollisionShape2D
 
-const ACCELERATION = .1
-const MAX_SPEED = 8
+const ACCELERATION = .6
+const MAX_SPEED = 10
 
 signal is_grounded
 
