@@ -9,7 +9,7 @@
 script = ExtResource("1_s1a7d")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-animation = &"Hide"
+animation = &""
 
 [node name="FiniteStateMachine" type="Node" parent="." node_paths=PackedStringArray("state")]
 script = ExtResource("2_go1tl")

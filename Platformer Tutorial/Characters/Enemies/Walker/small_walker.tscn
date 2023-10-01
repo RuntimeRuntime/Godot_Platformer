@@ -46,6 +46,7 @@ metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" parent="." index="0"]
 sprite_frames = SubResource("SpriteFrames_qyila")
+animation = &"Hide"
 
 [node name="CollisionShape2D" parent="." index="2"]
 position = Vector2(0.5, 6)

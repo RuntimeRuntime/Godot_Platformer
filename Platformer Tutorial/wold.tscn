@@ -1,17 +1,18 @@
-[gd_scene load_steps=11 format=3 uid="uid://dedgxjovehjyv"]
+[gd_scene load_steps=12 format=3 uid="uid://dedgxjovehjyv"]
 
 [ext_resource type="PackedScene" uid="uid://rdfl11yletln" path="res://Tilemaps/SnowTileMap.tscn" id="1_suusr"]
 [ext_resource type="PackedScene" uid="uid://br7k4mf2ly1sx" path="res://Characters/Player/player.tscn" id="2_bpv58"]
 [ext_resource type="Texture2D" uid="uid://bigf8utux3kql" path="res://Textures/BackgroundLayer.png" id="3_5xlfu"]
 [ext_resource type="PackedScene" uid="uid://bkyifxjgeuqa8" path="res://Tilemaps/tile_map.tscn" id="3_g6e8d"]
 [ext_resource type="Texture2D" uid="uid://dgfsvsmjcjkpu" path="res://Textures/MiddleLayer.png" id="4_8u0ec"]
+[ext_resource type="Script" path="res://RemoteTransform2D.gd" id="4_tpqsn"]
 [ext_resource type="Texture2D" uid="uid://du3r45kl0kgyi" path="res://Textures/FrontLayer.png" id="5_mntje"]
 [ext_resource type="PackedScene" uid="uid://nwya7esbtdh1" path="res://Characters/Enemies/Spikes/spikes.tscn" id="7_v8uwl"]
 [ext_resource type="PackedScene" uid="uid://dc5ax57xeudks" path="res://Characters/Enemies/Smasher/smasher.tscn" id="8_1h7b0"]
 [ext_resource type="PackedScene" uid="uid://8ynckwd8m85j" path="res://Characters/Enemies/Walker/big_walker.tscn" id="9_1w6wb"]
 [ext_resource type="PackedScene" uid="uid://dgule178clfgf" path="res://Characters/Enemies/Walker/small_walker.tscn" id="10_f8ig8"]
 
-[node name="Wold" type="Node2D"]
+[node name="World" type="Node2D"]
 
 [node name="SnowTileMap" parent="." instance=ExtResource("1_suusr")]
 layer_0/tile_data = PackedInt32Array(589823, 65536, 5, 524288, 131072, 4, 524289, 131072, 4, 524290, 131072, 4, 524291, 131072, 4, 524292, 131072, 4, 458749, 196608, 4, 458748, 131072, 4, 458747, 131072, 4, 458746, 65536, 4, 786425, 65536, 4, 786426, 131072, 4, 786427, 131072, 4, 786428, 131072, 4, 786429, 131072, 4, 720894, 65536, 5, 655359, 0, 6, 720895, 196608, 6, 786430, 131072, 7, 786431, 196608, 7, 655365, 0, 7, 655366, 131072, 4, 655367, 131072, 4, 655368, 131072, 4, 655369, 131072, 4, 655370, 196608, 4, 589829, 196608, 6, 524293, 196608, 5, 589834, 0, 6, 524298, 0, 5, 524299, 131072, 4, 524300, 131072, 4, 524301, 131072, 4, 524302, 131072, 4, 524303, 131072, 4, 524304, 196608, 4)
@@ -29,6 +30,7 @@ position = Vector2(45, 117)
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="Player"]
 remote_path = NodePath("../../Camera2D")
+script = ExtResource("4_tpqsn")
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
@@ -82,13 +84,13 @@ position = Vector2(135, 144)
 position = Vector2(225, 63)
 
 [node name="Smasher2" parent="Smashers" instance=ExtResource("8_1h7b0")]
-position = Vector2(-28, 39)
+position = Vector2(-28, 136)
 
 [node name="Smasher3" parent="Smashers" instance=ExtResource("8_1h7b0")]
 position = Vector2(189, 45)
 
 [node name="Smasher4" parent="Smashers" instance=ExtResource("8_1h7b0")]
-position = Vector2(99, 18)
+position = Vector2(144, 36)
 
 [node name="BigWalker" parent="." instance=ExtResource("9_1w6wb")]
 position = Vector2(-91, 96)

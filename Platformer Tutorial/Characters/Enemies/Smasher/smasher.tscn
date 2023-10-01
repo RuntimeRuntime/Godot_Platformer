@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://dc5ax57xeudks"]
+[gd_scene load_steps=21 format=3 uid="uid://dc5ax57xeudks"]
 
 [ext_resource type="Texture2D" uid="uid://c71v6030set4x" path="res://Textures/characters_packed.png" id="1_awpbr"]
 [ext_resource type="Script" path="res://Characters/Enemies/Smasher/smasher.gd" id="1_cme8a"]
@@ -19,10 +19,6 @@ region = Rect2(120, 24, 24, 24)
 atlas = ExtResource("1_awpbr")
 region = Rect2(96, 24, 24, 24)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_bqyhw"]
-atlas = ExtResource("1_awpbr")
-region = Rect2(120, 24, 24, 24)
-
 [sub_resource type="SpriteFrames" id="SpriteFrames_huwnx"]
 animations = [{
 "frames": [{
@@ -39,14 +35,6 @@ animations = [{
 }],
 "loop": true,
 "name": &"Idle",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_bqyhw")
-}],
-"loop": true,
-"name": &"new_animation",
 "speed": 5.0
 }]
 
@@ -94,7 +82,7 @@ collision_mask = 2
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(1, 2)
 sprite_frames = SubResource("SpriteFrames_huwnx")
-animation = &"new_animation"
+animation = &"Angry"
 
 [node name="Hitbox" parent="." instance=ExtResource("7_q6xgl")]
 
